@@ -6,13 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-i = 1
-50.times do
-    Movie.create!([
-      { name: Faker::Movie.title, client_id: i }
-    ])
-    i = i + 1
-  end
+# i = 1
+# 50.times do
+#     Movie.create!([
+#       { name: Faker::Movie.title, client_id: i }
+#     ])
+#     i = i + 1
+#   end
 
   10.times do
     Client.create!([
