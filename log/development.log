@@ -1,0 +1,75 @@
+  [1m[35m (1199.9ms)[0m  [1m[35mCREATE DATABASE "BlockBuster_development" ENCODING = 'unicode'[0m
+  [1m[35m (1446.9ms)[0m  [1m[35mCREATE DATABASE "BlockBuster_test" ENCODING = 'unicode'[0m
+  [1m[35m (33.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1705384434267797325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (3.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateClients (20230630002455)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (15.7ms)[0m  [1m[35mCREATE TABLE "clients" ("id" bigserial primary key, "name" character varying, "age" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230630002455"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMovies (20230630002524)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.5ms)[0m  [1m[35mCREATE TABLE "movies" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230630002524"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddClientsToMovies (20230630002725)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "movies" ADD "client_id" bigint[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE INDEX "index_movies_on_client_id" ON "movies" ("client_id")[0m
+  [1m[35m (6.7ms)[0m  [1m[35mALTER TABLE "movies" ADD CONSTRAINT "fk_rails_c69ada118d"
+FOREIGN KEY ("client_id")
+  REFERENCES "clients" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230630002725"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-06-30 00:29:23.200543"], ["updated_at", "2023-06-30 00:29:23.200543"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1705384434267797325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2023-06-29 20:29:47 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (4.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering C:/Users/hugoc/.local/share/gem/ruby/3.1.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered C:/Users/hugoc/.local/share/gem/ruby/3.1.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb (Duration: 17.5ms | Allocations: 689)
+Completed 200 OK in 254ms (Views: 85.8ms | ActiveRecord: 0.0ms | Allocations: 7889)
+
+
+Started GET "/" for 127.0.0.1 at 2023-06-29 20:30:56 -0400
+Processing by ClientsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering clients/index.html.erb within layouts/application
+  [1m[36mClient Load (3.7ms)[0m  [1m[34mSELECT "clients".* FROM "clients"[0m
+  ↳ app/views/clients/index.html.erb:6
+  Rendered clients/index.html.erb within layouts/application (Duration: 26.8ms | Allocations: 4996)
+  Rendered layout layouts/application.html.erb (Duration: 2048.1ms | Allocations: 99530)
+Completed 200 OK in 2083ms (Views: 2059.7ms | ActiveRecord: 3.7ms | Allocations: 101555)
+
+
+Started GET "/moves/new" for 127.0.0.1 at 2023-06-29 20:31:22 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/moves/new"):
+  
+Started GET "/movies/new" for 127.0.0.1 at 2023-06-29 20:31:31 -0400
+Processing by MoviesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 52.2ms | Allocations: 2321)
+  Rendered movies/new.html.erb within layouts/application (Duration: 55.2ms | Allocations: 2680)
+  Rendered layout layouts/application.html.erb (Duration: 93.3ms | Allocations: 5176)
+Completed 200 OK in 152ms (Views: 104.3ms | ActiveRecord: 9.4ms | Allocations: 10838)
+
+
+Started GET "/clients/new" for 127.0.0.1 at 2023-06-29 20:31:43 -0400
+Processing by ClientsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering clients/new.html.erb within layouts/application
+  Rendered clients/_form.html.erb (Duration: 70.6ms | Allocations: 1805)
+  Rendered clients/new.html.erb within layouts/application (Duration: 76.4ms | Allocations: 2132)
+  Rendered layout layouts/application.html.erb (Duration: 91.6ms | Allocations: 4563)
+Completed 200 OK in 123ms (Views: 92.9ms | ActiveRecord: 3.3ms | Allocations: 7367)
+
+
